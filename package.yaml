@@ -24,6 +24,9 @@ dependencies:
 
 library:
   source-dirs: src
+  dependencies:
+  - split
+  - Unique
 
 executables:
   sudoku-solver-haskell-exe:
@@ -35,6 +38,8 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - sudoku-solver-haskell
+    - parallel
+    - time
 
 tests:
   sudoku-solver-haskell-test:
