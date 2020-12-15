@@ -6,10 +6,10 @@ import Sudoku
 backtrack :: Sudoku -> Maybe Sudoku
 backtrack sudoku =
     helper (getUnfilledCell sudoku) 
-     where
+      where
         helper [] = Just sudoku 
         helper (cell:_) = iterChoices $ getPossibleOptions sudoku cell
-         where
+          where
             iterChoices [] = Nothing
             iterChoices (x:xs) = case backtrack $ fillSudoku sudoku cell x of
                 Nothing -> iterChoices xs

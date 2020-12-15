@@ -1,6 +1,5 @@
 import Sudoku
 import SudokuSolver
-import Data.Maybe       (fromJust)
 
 main :: IO()
 main = do

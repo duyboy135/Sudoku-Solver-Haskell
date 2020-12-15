@@ -46,7 +46,7 @@ fillSudoku sudoku cell num =
 getSudokuCellsWithFunc :: Sudoku -> (Cell -> Bool) -> [Int]
 getSudokuCellsWithFunc sudoku func = 
     helper sudoku 0
-    where
+      where
         helper l pos  
             | pos == 81 = []
             | func (intToCell pos) =  head l : helper (tail l) (pos + 1)
@@ -72,7 +72,7 @@ getSubSquare sudoku corner =
 getUnfilledCell :: Sudoku -> [Cell]
 getUnfilledCell sudoku =
     helper sudoku 0
-    where
+      where
         helper l pos  
             | pos == 81 = []
             | head l == 0 =  intToCell pos : helper (tail l) (pos + 1)
