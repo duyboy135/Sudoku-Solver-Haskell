@@ -1,13 +1,23 @@
 module Sudoku
+  ( Sudoku
+  , Cell (..)
+  , readSudoku
+  , showSudoku
+  , fillSudoku
+  , getUnfilledCells
+  , getPossibleCellOptions
+  , validateSudoku
+  )
 where
 
 import Control.Monad        (replicateM)
+import Data.List            (sort)
 import Data.List.Split      (splitOn)
 import Data.List.Unique     (sortUniq)
 
 data Cell = Cell {
       row :: Int
-   ,  col :: Int
+    , col :: Int
   } deriving (Show, Eq, Ord)
 
 type Sudoku = [Int]
@@ -69,8 +79,8 @@ getSubSquare sudoku corner =
                                     && (col cell < col corner + 3)
                           )
 
-getUnfilledCell :: Sudoku -> [Cell]
-getUnfilledCell sudoku =
+getUnfilledCells :: Sudoku -> [Cell]
+getUnfilledCells sudoku =
     helper sudoku 0
       where
         helper l pos  
@@ -78,8 +88,8 @@ getUnfilledCell sudoku =
             | head l == 0 =  intToCell pos : helper (tail l) (pos + 1)
             | otherwise = helper (tail l) (pos + 1)
 
-getPossibleOptions :: Sudoku -> Cell -> [Int]
-getPossibleOptions sudoku cell =
+getPossibleCellOptions :: Sudoku -> Cell -> [Int]
+getPossibleCellOptions sudoku cell =
     let rowCells    = getRow sudoku (row cell)
         colCells    = getCol sudoku (col cell)
         squareCells = getSubSquare sudoku 
@@ -89,12 +99,16 @@ getPossibleOptions sudoku cell =
     in
         filter (`notElem` forbidden) [1..9]
 
+containAllDigits :: [Int] -> Bool 
+containAllDigits digits =
+    sort digits == [1..9]
 
-
-        
-
-
-
-
-
-
+validateSudoku :: Sudoku -> Bool 
+validateSudoku sudoku = 
+    let rows = [1..9]
+        cols = [1..9]
+        subSquares = [Cell{row = 3*r + 1, col = 3*c + 1} | r <- [0..2], c <- [0..2]]
+    in
+        and (containAllDigits . getRow sudoku <$> rows)
+        && and (containAllDigits . getCol sudoku <$> cols)
+        && and (containAllDigits . getSubSquare sudoku <$> subSquares)
