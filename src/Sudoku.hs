@@ -15,6 +15,7 @@ import Data.List            (sort)
 import Data.List.Split      (splitOn)
 import Data.List.Unique     (sortUniq)
 
+
 data Cell = Cell {
       row :: Int
     , col :: Int

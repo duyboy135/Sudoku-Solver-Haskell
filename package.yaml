@@ -27,6 +27,8 @@ library:
   dependencies:
   - split
   - Unique
+  - monad-par
+  - deepseq
 
 executables:
   sudoku-solver-haskell-exe:
@@ -38,7 +40,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - sudoku-solver-haskell
-    - parallel
     - time
 
 tests:
