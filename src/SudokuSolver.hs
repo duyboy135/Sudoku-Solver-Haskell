@@ -5,6 +5,7 @@ module SudokuSolver
 where
 
 import Sudoku
+
 import Control.Monad.Par
 import Control.DeepSeq
 
@@ -22,7 +23,6 @@ generateNextStep sudoku =
         in
             fillSudoku sudoku toFillCell <$> getPossibleCellOptions sudoku toFillCell
 
-
 search :: Sudoku -> Maybe Sudoku
 search sudoku =
   helper (getUnfilledCells sudoku) 
@@ -35,6 +35,10 @@ search sudoku =
             Nothing -> tryChoices xs
             Just foundSudoku -> Just foundSudoku
 
+
+maxDepth :: Int 
+maxDepth = 4
+
 findResult :: [Maybe Sudoku] -> Maybe Sudoku
 findResult [] = Nothing 
 findResult (Just x : xs)  = Just x
@@ -44,7 +48,7 @@ parSearch :: Sudoku -> Maybe Sudoku
 parSearch sudoku =
   runPar $ generatePar 0 sudoku 
     where
-      generatePar depth sudoku | depth >= 4
+      generatePar depth sudoku | depth >= maxDepth
         = return $ search sudoku
       generatePar depth sudoku =
         if null (getUnfilledCells sudoku)

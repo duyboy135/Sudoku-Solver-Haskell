@@ -15,7 +15,6 @@ import Data.List            (sort)
 import Data.List.Split      (splitOn)
 import Data.List.Unique     (sortUniq)
 
-
 data Cell = Cell {
       row :: Int
     , col :: Int
@@ -32,9 +31,10 @@ readSudoku = do
 showSudoku :: Sudoku -> String
 showSudoku [] = ""
 showSudoku s@(h:t) 
-    | len `mod` 9 == 1 = show h <> "\n" <> rem
-    | otherwise = show h <> " " <> rem
+    | len `mod` 9 == 1 = c <> "\n" <> rem
+    | otherwise = c <> " " <> rem
     where
+        c = if h == 0 then "_" else show h
         len = length s
         rem = showSudoku t
 
