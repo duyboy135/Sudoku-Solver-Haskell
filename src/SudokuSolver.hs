@@ -35,17 +35,13 @@ search sudoku =
             Nothing -> tryChoices xs
             Just foundSudoku -> Just foundSudoku
 
-
-maxDepth :: Int 
-maxDepth = 4
-
 findResult :: [Maybe Sudoku] -> Maybe Sudoku
 findResult [] = Nothing 
 findResult (Just x : xs)  = Just x
 findResult (Nothing : xs) = findResult xs
 
-parSearch :: Sudoku -> Maybe Sudoku
-parSearch sudoku =
+parSearch :: Sudoku -> Int -> Maybe Sudoku
+parSearch sudoku maxDepth =
   runPar $ generatePar 0 sudoku 
     where
       generatePar depth sudoku | depth >= maxDepth
